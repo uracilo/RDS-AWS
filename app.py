@@ -3,17 +3,18 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String
 from flask_marshmallow import Marshmallow
 import os
+from os import environ
 
 
 #Application and database setup
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 POSTGRES = {
-    'user': 'postgresql',
-    'pw': 'postgresql',
-    'db': 'postgres',
-    'host': 'postgresql.cpnd5xoosltm.us-east-1.rds.amazonaws.com',
-    'port': '5432',
+    'user': environ.getenv('SECRET_USER'),
+    'pw': environ.getenv('SECRET_PWD'),
+    'db': environ.getenv('SECRET_DB'),
+    'host': environ.getenv('SECRET_HOST'),
+    'port': environ.getenv('SECRET_PORT'),
 }
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
@@ -21,6 +22,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 @app.route('/')
 def hello():
     return {"hello": "world"}
+
+
+@app.route('/verify')
+def verify():
+    return '<p>' + app.config['SECRET_HOST'] + '</p>'
+
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
