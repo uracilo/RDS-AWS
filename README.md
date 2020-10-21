@@ -6,40 +6,19 @@ flask db_seed
 
 export .env
 
-sudo -u postgres psql postgres
 
 
-SELECT * FROM public.cars
+SELECT * FROM posgres.quotes
 ORDER BY id ASC 
-
-sudo apt install python3-pip
 
 
 pip3 install virtualenv
-
-sudo apt install virtualenv
-
-
 virtualenv p --python=python3  
-
 source p/bin/activate
 
 pip install -r requirements.txt
 
-
-sudo apt-get install screen
-
-screen flask run
-
-ctrl + a + d
-
-screen -ls
-
-STOP 
-screen -X -S [session # you want to kill] quit
-
-screen -r [session # you want to see]
-
+flask run
 
 
 
