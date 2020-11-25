@@ -9,10 +9,10 @@ import os
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 POSTGRES = {
-    'user': 'postgresql',
-    'pw': 'postgresql',
-    'db': 'postgres',
-    'host': 'postgresql.cpnd5xoosltm.us-east-1.rds.amazonaws.com',
+    'user': 'root',
+    'pw': 'root',
+    'db': 'test',
+    'host': '172.26.0.1',
     'port': '5432',
 }
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
@@ -25,8 +25,6 @@ def hello():
 # @app.route('/verify')
 # def verify():
 #     return '<p>' + app.config['SECRET_KEY'] + '</p>'
-
-
 
 
 db = SQLAlchemy(app)

@@ -1,0 +1,39 @@
+version: '3.6'
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=test
+    networks:
+      - test
+    ports:
+      - "5432:5432"
+
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "test@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "test123!"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+
+  api-flask:
+    container_name: api-flask
+    build: app/.
+    #command: flask db_create && flask db_seed
+    ports:
+      - "5000:5000"
+    networks:
+      - test
+    depends_on:
+      - postgres
+
+networks:
+  test:
+    name: test
+    driver: bridge
